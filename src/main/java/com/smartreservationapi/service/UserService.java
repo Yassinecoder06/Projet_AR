@@ -1,0 +1,24 @@
+package com.smartreservationapi.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.smartreservationapi.entity.User;
+import com.smartreservationapi.repository.UserRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class UserService {
+    private final UserRepository userRepository;
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public User createUser(User user) {
+        return userRepository.save(user);
+    }
+}

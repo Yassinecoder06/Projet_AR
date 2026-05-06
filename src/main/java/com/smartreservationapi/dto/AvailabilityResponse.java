@@ -1,0 +1,17 @@
+package com.smartreservationapi.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class AvailabilityResponse {
+    private Long roomId;
+    private boolean available;
+}
