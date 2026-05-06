@@ -41,16 +41,36 @@ Reservations:
 - DELETE /reservations/{id}
 
 ## Setup Instructions (Local)
-1. Ensure Java 17 and Maven are installed.
-2. Create a local .env file (see .env.example).
-3. Run the application:
+1. Ensure Java 17, Maven, Docker Desktop, and Supabase CLI are installed.
+2. Start local Supabase:
+   ```bash
+   supabase start
+   ```
+3. Apply migrations + seed data:
+   ```bash
+   supabase db reset
+   ```
+4. Create a local .env file (see .env.example) and set:
+   ```
+   PORT=8081
+   SPRING_PROFILES_ACTIVE=prod
+   JDBC_URL=jdbc:postgresql://127.0.0.1:54322/postgres
+   DB_USER=postgres
+   DB_PASSWORD=postgres
+   ```
+5. Run the application:
    ```bash
    mvn spring-boot:run
    ```
-4. Swagger UI: http://localhost:8080/swagger-ui.html
+6. Swagger UI: http://localhost:8081/swagger-ui.html
+
+## Local Supabase (Database)
+- Supabase Studio: http://127.0.0.1:54323
+- Project URL: http://127.0.0.1:54321
 
 ## Environment Variables
 - PORT
+- SPRING_PROFILES_ACTIVE
 - JDBC_URL
 - DB_USER
 - DB_PASSWORD
@@ -59,9 +79,15 @@ Reservations:
 - dev: H2 in-memory database
 - prod: PostgreSQL (Supabase)
 
-To run with a profile:
-```bash
-SPRING_PROFILES_ACTIVE=dev mvn spring-boot:run
+Default profile is set via .env:
+```
+SPRING_PROFILES_ACTIVE=prod
+```
+
+Windows PowerShell (one-off override):
+```powershell
+$env:SPRING_PROFILES_ACTIVE="dev"
+mvn spring-boot:run
 ```
 
 ## Deployment (Render + Supabase)
@@ -79,6 +105,24 @@ SPRING_PROFILES_ACTIVE=dev mvn spring-boot:run
 5. Start command:
    ```bash
    java -jar target/*.jar
+   ```
+
+## Switch From Local Supabase to Supabase Cloud
+1. Create a Supabase project in the dashboard.
+2. Link the local repo to your cloud project:
+   ```bash
+   supabase login
+   supabase link --project-ref <your-project-ref>
+   ```
+3. Push local migrations to the cloud database:
+   ```bash
+   supabase db push
+   ```
+4. Update .env to use the cloud connection string:
+   ```
+   JDBC_URL=jdbc:postgresql://<project-ref>.supabase.co:5432/postgres?sslmode=require
+   DB_USER=postgres
+   DB_PASSWORD=<your-cloud-db-password>
    ```
 
 ## Notes
