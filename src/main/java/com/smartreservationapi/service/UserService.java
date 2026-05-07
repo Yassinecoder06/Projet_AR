@@ -7,12 +7,13 @@ import org.springframework.stereotype.Service;
 import com.smartreservationapi.entity.User;
 import com.smartreservationapi.repository.UserRepository;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();

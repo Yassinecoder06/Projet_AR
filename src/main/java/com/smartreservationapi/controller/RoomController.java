@@ -19,14 +19,16 @@ import com.smartreservationapi.entity.Room;
 import com.smartreservationapi.service.ReservationService;
 import com.smartreservationapi.service.RoomService;
 
-import lombok.RequiredArgsConstructor;
-
 @RestController
 @RequestMapping("/rooms")
-@RequiredArgsConstructor
 public class RoomController {
     private final RoomService roomService;
     private final ReservationService reservationService;
+
+    public RoomController(RoomService roomService, ReservationService reservationService) {
+        this.roomService = roomService;
+        this.reservationService = reservationService;
+    }
 
     @GetMapping
     public List<Room> getRooms() {
@@ -45,9 +47,6 @@ public class RoomController {
             @RequestParam @DateTimeFormat(iso = ISO.TIME) LocalTime start,
             @RequestParam @DateTimeFormat(iso = ISO.TIME) LocalTime end) {
         boolean available = reservationService.isRoomAvailable(id, date, start, end);
-        return AvailabilityResponse.builder()
-                .roomId(id)
-                .available(available)
-                .build();
+        return new AvailabilityResponse(id, available);
     }
 }

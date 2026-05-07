@@ -18,14 +18,17 @@ import com.smartreservationapi.repository.ReservationRepository;
 import com.smartreservationapi.repository.RoomRepository;
 import com.smartreservationapi.repository.UserRepository;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final UserRepository userRepository;
     private final RoomRepository roomRepository;
+
+    public ReservationService(ReservationRepository reservationRepository, UserRepository userRepository, RoomRepository roomRepository) {
+        this.reservationRepository = reservationRepository;
+        this.userRepository = userRepository;
+        this.roomRepository = roomRepository;
+    }
 
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
@@ -50,13 +53,12 @@ public class ReservationService {
             throw new ReservationConflictException("Reservation conflicts with an existing booking.");
         }
 
-        Reservation reservation = Reservation.builder()
-                .date(request.getDate())
-                .startTime(request.getStartTime())
-                .endTime(request.getEndTime())
-                .user(user)
-                .room(room)
-                .build();
+        Reservation reservation = new Reservation();
+        reservation.setDate(request.getDate());
+        reservation.setStartTime(request.getStartTime());
+        reservation.setEndTime(request.getEndTime());
+        reservation.setUser(user);
+        reservation.setRoom(room);
 
         Reservation saved = reservationRepository.save(reservation);
         return toResponse(saved);
@@ -86,15 +88,15 @@ public class ReservationService {
     }
 
     private ReservationResponse toResponse(Reservation reservation) {
-        return ReservationResponse.builder()
-                .id(reservation.getId())
-                .date(reservation.getDate())
-                .startTime(reservation.getStartTime())
-                .endTime(reservation.getEndTime())
-                .userId(reservation.getUser().getId())
-                .userName(reservation.getUser().getName())
-                .roomId(reservation.getRoom().getId())
-                .roomName(reservation.getRoom().getName())
-                .build();
+        ReservationResponse response = new ReservationResponse();
+        response.setId(reservation.getId());
+        response.setDate(reservation.getDate());
+        response.setStartTime(reservation.getStartTime());
+        response.setEndTime(reservation.getEndTime());
+        response.setUserId(reservation.getUser().getId());
+        response.setUserName(reservation.getUser().getName());
+        response.setRoomId(reservation.getRoom().getId());
+        response.setRoomName(reservation.getRoom().getName());
+        return response;
     }
 }

@@ -15,13 +15,14 @@ import com.smartreservationapi.dto.ReservationResponse;
 import com.smartreservationapi.entity.Reservation;
 import com.smartreservationapi.service.ReservationService;
 
-import lombok.RequiredArgsConstructor;
-
 @RestController
 @RequestMapping("/reservations")
-@RequiredArgsConstructor
 public class ReservationController {
     private final ReservationService reservationService;
+
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
 
     @GetMapping
     public List<Reservation> getReservations() {

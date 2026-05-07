@@ -8,12 +8,13 @@ import com.smartreservationapi.entity.Room;
 import com.smartreservationapi.exception.ResourceNotFoundException;
 import com.smartreservationapi.repository.RoomRepository;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class RoomService {
     private final RoomRepository roomRepository;
+
+    public RoomService(RoomRepository roomRepository) {
+        this.roomRepository = roomRepository;
+    }
 
     public List<Room> getAllRooms() {
         return roomRepository.findAll();

@@ -79,7 +79,7 @@ Reservations:
 - dev: H2 in-memory database
 - prod: PostgreSQL (Supabase)
 
-Default profile is set via .env:
+Default profile is prod:
 ```
 SPRING_PROFILES_ACTIVE=prod
 ```
@@ -124,6 +124,7 @@ mvn spring-boot:run
    DB_USER=postgres
    DB_PASSWORD=<your-cloud-db-password>
    ```
+5. Deploy the same project to Render with the same env vars set in the Render dashboard.
 
 ## Notes
 - Conflict detection uses: (start < existingEnd) AND (end > existingStart)

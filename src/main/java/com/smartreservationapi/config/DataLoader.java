@@ -15,13 +15,13 @@ public class DataLoader {
     public CommandLineRunner loadData(UserRepository userRepository, RoomRepository roomRepository) {
         return args -> {
             if (userRepository.count() == 0) {
-                userRepository.save(User.builder().name("Alice Johnson").email("alice@example.com").build());
-                userRepository.save(User.builder().name("David Kim").email("david@example.com").build());
+                userRepository.save(new User(null, "Alice Johnson", "alice@example.com"));
+                userRepository.save(new User(null, "David Kim", "david@example.com"));
             }
 
             if (roomRepository.count() == 0) {
-                roomRepository.save(Room.builder().name("Ocean Room").capacity(6).build());
-                roomRepository.save(Room.builder().name("Sky Room").capacity(12).build());
+                roomRepository.save(new Room(null, "Ocean Room", 6));
+                roomRepository.save(new Room(null, "Sky Room", 12));
             }
         };
     }
