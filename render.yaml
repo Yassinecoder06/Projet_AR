@@ -5,6 +5,8 @@ services:
     plan: free
     dockerfilePath: "./Dockerfile"
     envVars:
+      - key: PORT
+        value: "8081"
       - key: SPRING_PROFILES_ACTIVE
         value: "prod"
       - key: JDBC_URL
