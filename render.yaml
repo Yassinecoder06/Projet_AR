@@ -1,13 +1,10 @@
 services:
   - type: web
     name: smart-reservation-api
-    env: java
+    env: docker
     plan: free
-    buildCommand: "./mvnw clean package"
-    startCommand: "./mvnw spring-boot:run"
+    dockerfilePath: "./Dockerfile"
     envVars:
-      - key: JAVA_VERSION
-        value: "17"
       - key: SPRING_PROFILES_ACTIVE
         value: "prod"
       - key: JDBC_URL
