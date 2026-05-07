@@ -4,3 +4,7 @@ target/
 *.iml
 .env
 .DS_Store
+
+screenshots/
+*.pdf
+*.tex
